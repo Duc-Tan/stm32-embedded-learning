@@ -9,6 +9,7 @@ void UART_Init(){
 	uint32_t* GPIOB_AFRL = (uint32_t*)(GPIOB_BASE_ADDR + 0x20);
 	uint32_t* UART1_CR1 = (uint32_t*)(UART1_BASE_ADDR + 0x0C);
 	uint32_t* UART1_BRR = (uint32_t*)(UART1_BASE_ADDR + 0x08);
+	uint32_t* UART1_CR3 = (uint32_t*)(UART1_BASE_ADDR +  0x14);
 	uint32_t* RCC_APB2ENR = (uint32_t*)(RCC_BASE_ADDR + 0x44);
 	uint32_t* RCC_AHB1ENR = (uint32_t*)(RCC_BASE_ADDR + 0x30);
 
@@ -34,10 +35,14 @@ void UART_Init(){
 	*UART1_CR1 |= (1 << 2);
 	/* UART1 enable */
 	*UART1_CR1 |= (1 << 13);
+	#if 0
 	/* Enable interrupt UART1 */
 	*UART1_CR1 |= (1 << 5);
 	uint32_t* ISER1 = (uint32_t*)0xE000E104;
 	*ISER1 |= (1 << 5);
+	#endif
+	/* DMA enable receiver */
+	*UART1_CR3 |= 1 << 6;
 }
 
 void UART_Send(char data){
@@ -59,6 +64,7 @@ void my_print(char* str, ...){
 	}
 	va_end(list);
 }
+#if 0
 char rx_buf;
 void USART1_IRQHandler(){
 	uint32_t* UART1_DR = (uint32_t*)(UART1_BASE_ADDR + 0x04);
@@ -72,3 +78,4 @@ void USART1_IRQHandler(){
 __attribute__((weak)) void UART1_Callback(char recv_byte){
     
 }
+#endif
