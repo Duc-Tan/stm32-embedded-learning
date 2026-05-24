@@ -7,10 +7,12 @@
 #include <string.h>
 #include "led.h"
 #include "button.h"
-#include "tim1.h"
+//#include "tim1.h"
 #include "exti0.h"
 #include "uart.h"
 #include "dma.h"
+#include "spi.h"
+
 
 void EXTI0_IT_Callback(){
 	LedToggle(GREEN_LED);
@@ -50,20 +52,29 @@ void DMA2_Receive_Callback(int recv_byte){
 	}
 }
 
+uint16_t x, y, z;
 int main(){
 	LED_Init();
 	Button_Init();
-	TIM1_Init();
+	//TIM1_Init();
 	EXTI0Init();
 	UART_Init();
 	DMA2_Init(data);
+	SPI1_Init();
 
 	my_print("Hello\n");
+	SPI1_Write_Data(0x20, 0b00001111);
 	while(1){
-		LedCtrl(BLUE_LED, ON_LED);
-		Delay_ms(1000);
-		LedCtrl(BLUE_LED, OFF_LED);
-		Delay_ms(1000);
+		uint8_t high, low;
+		SPI1_Read_Data(0x28, &low);
+		SPI1_Read_Data(0x29, &high);
+		x = (high << 8) | low;
+		SPI1_Read_Data(0x2A, &low);
+		SPI1_Read_Data(0x2B, &high);
+		y = (high << 8) | low;
+		SPI1_Read_Data(0x2C, &low);
+		SPI1_Read_Data(0x2D, &high);
+		z = (high << 8) | low;
 	}
 
 	return 0;
