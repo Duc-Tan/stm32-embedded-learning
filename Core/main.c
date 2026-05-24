@@ -12,7 +12,7 @@
 #include "uart.h"
 #include "dma.h"
 #include "spi.h"
-
+#include "i2c.h"
 
 void EXTI0_IT_Callback(){
 	LedToggle(GREEN_LED);
@@ -61,19 +61,21 @@ int main(){
 	UART_Init();
 	DMA2_Init(data);
 	SPI1_Init();
+	I2C1_Init();
 
 	my_print("Hello\n");
-	SPI1_Write_Data(0x20, 0b00001111);
+	uint8_t accel_addr = 0b0011001;
+	I2C1_Write_Data(accel_addr, 0x20, 0b00011111);
 	while(1){
 		uint8_t high, low;
-		SPI1_Read_Data(0x28, &low);
-		SPI1_Read_Data(0x29, &high);
+		I2C1_Read_Data(accel_addr, 0x28, &low);
+		I2C1_Read_Data(accel_addr, 0x29, &high);
 		x = (high << 8) | low;
-		SPI1_Read_Data(0x2A, &low);
-		SPI1_Read_Data(0x2B, &high);
+		I2C1_Read_Data(accel_addr, 0x2A, &low);
+		I2C1_Read_Data(accel_addr, 0x2B, &high);
 		y = (high << 8) | low;
-		SPI1_Read_Data(0x2C, &low);
-		SPI1_Read_Data(0x2D, &high);
+		I2C1_Read_Data(accel_addr, 0x2C, &low);
+		I2C1_Read_Data(accel_addr, 0x2D, &high);
 		z = (high << 8) | low;
 	}
 
