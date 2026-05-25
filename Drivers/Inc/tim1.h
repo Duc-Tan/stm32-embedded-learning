@@ -10,7 +10,7 @@
 #include<stdint.h>
 
 void TIM1_Init();
-void TIM1_UP_TIM10_IRQHandler();
 void Delay_ms(int ms);
+void TIM1_Set_Duty_Channel1(uint8_t duty_percent);
 
 #endif /* TIM1_H_ */

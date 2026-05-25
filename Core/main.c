@@ -13,7 +13,7 @@
 #include "dma.h"
 // #include "spi.h"
 // #include "i2c.h"
-#include "adc.h"
+// #include "adc.h"
 
 void EXTI0_IT_Callback(){
 	LedToggle(GREEN_LED);
@@ -63,14 +63,21 @@ int main(){
 	DMA2_Init(data);
 	// SPI1_Init();
 	// I2C1_Init();
-	ADC_Init();
+	// ADC_Init();
 
-	my_print("Temperature:\n");
+	
 	while(1){
-		float value = ADC_Read_Data_Sensor();
-		print_float(value);
-		my_print("*C\n");
-		Delay_ms(1000);
+		for(uint8_t speed = 0; speed <= 100; speed += 5)
+        {
+            TIM1_Set_Duty_Channel1(speed);
+            Delay_ms(1000); 
+        }
+        
+        for(uint8_t speed = 100; speed > 0; speed -= 5)
+        {
+            TIM1_Set_Duty_Channel1(speed);
+            Delay_ms(1000);
+        }
 	}
 
 	return 0;
