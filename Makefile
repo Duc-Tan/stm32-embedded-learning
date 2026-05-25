@@ -7,6 +7,7 @@ All:
 	arm-none-eabi-gcc -g -O0 -mcpu=cortex-m4 -std=gnu11 -IDrivers/Inc -E Drivers/Src/dma.c
 	arm-none-eabi-gcc -g -O0 -mcpu=cortex-m4 -std=gnu11 -IDrivers/Inc -E Drivers/Src/spi.c
 	arm-none-eabi-gcc -g -O0 -mcpu=cortex-m4 -std=gnu11 -IDrivers/Inc -E Drivers/Src/i2c.c
+	arm-none-eabi-gcc -g -O0 -mcpu=cortex-m4 -std=gnu11 -IDrivers/Inc -E Drivers/Src/adc.c
 	arm-none-eabi-gcc -g -O0 -mcpu=cortex-m4 -std=gnu11 -IDrivers/Inc -c Drivers/Src/button.c -o build/button.o 
 	arm-none-eabi-gcc -g -O0 -mcpu=cortex-m4 -std=gnu11 -IDrivers/Inc -c Drivers/Src/exti0.c -o build/exti0.o 
 	arm-none-eabi-gcc -g -O0 -mcpu=cortex-m4 -std=gnu11 -IDrivers/Inc -c Drivers/Src/led.c -o build/led.o
@@ -15,6 +16,7 @@ All:
 	arm-none-eabi-gcc -g -O0 -mcpu=cortex-m4 -std=gnu11 -IDrivers/Inc -c Drivers/Src/dma.c -o build/dma.o
 	arm-none-eabi-gcc -g -O0 -mcpu=cortex-m4 -std=gnu11 -IDrivers/Inc -c Drivers/Src/spi.c -o build/spi.o
 	arm-none-eabi-gcc -g -O0 -mcpu=cortex-m4 -std=gnu11 -IDrivers/Inc -c Drivers/Src/i2c.c -o build/i2c.o
+	arm-none-eabi-gcc -g -O0 -mcpu=cortex-m4 -std=gnu11 -IDrivers/Inc -c Drivers/Src/adc.c -o build/adc.o
 	arm-none-eabi-gcc -g -O0 -mcpu=cortex-m4 -std=gnu11 -IDrivers/Inc -c Core/main.c -o build/main.o
 	arm-none-eabi-gcc -g -O0 -mcpu=cortex-m4 -std=gnu11 -IDrivers/Inc -c Core/syscalls.c -o build/syscalls.o
 	arm-none-eabi-gcc -g -O0 -mcpu=cortex-m4 -std=gnu11 -c -x assembler-with-cpp Core/startup_stm32f411vetx.s -o build/startup.o

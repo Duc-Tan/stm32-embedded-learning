@@ -56,13 +56,25 @@ void UART_Send(char data){
 void my_print(char* str, ...){
 	va_list list;
     va_start(list, str);
-	char print_buf[128] = {0};
+	char print_buf[256] = {0};
 	vsprintf(print_buf, str, list);
 	int len = strlen(print_buf);
 	for(int i = 0; i < len; i++){
 		UART_Send(print_buf[i]);
 	}
 	va_end(list);
+}
+void print_float(float val){
+    int int_part = (int)val;
+    int frac_part = (int)((val - int_part) * 100);
+	if(frac_part < 0){
+		frac_part *= (-1);
+	}
+    char buf[32];
+    sprintf(buf, "%d.%02d", int_part, frac_part);
+    for(int i = 0; i < strlen(buf); i++){
+        UART_Send(buf[i]);
+    }
 }
 #if 0
 char rx_buf;
